@@ -1,0 +1,9 @@
+db.sqlite3
+sqlite.db
+venv
+
+__pycache__/
+*/__pycache__/
+*.py[cod]
+
+.pyc
