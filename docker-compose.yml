@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./
+    container_name: sound_cloud_web
+    restart: always
+    command: bash
+    volumes:
+      - .:/usr/src/app
+      - ./static:/usr/src/app/static
+      - ./media:/usr/src/app/media
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:12
+    container_name: sound_cloud_web
+    volumes:
+      - audio_postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+  
+  nginx:
+    build: ./nginx
+    container_name: sound_cloud_nginx
+    restart: on-failure
+    ports:
+      - 80:80
+    volumes:
+      - ./static:/static
+      - ./media:/media
+    depends_on:
+      - web
+
+volumes:
+  audio_postgres_data:

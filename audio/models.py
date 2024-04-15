@@ -3,7 +3,7 @@ from django.db import models
 from oauth.models import AuthUser
 from django.core.validators import FileExtensionValidator
 
-from base.services import get_path_upload_cover_album, get_path_upload_cover_playlist, get_path_upload_track, validate_size_image
+from base.services import get_path_upload_cover_album, get_path_upload_cover_playlist, get_path_upload_cover_track, get_path_upload_track, validate_size_image
 
 
 class License(models.Model):
@@ -44,6 +44,13 @@ class Track(models.Model):
     download = models.PositiveIntegerField(default=0)
     likes_count = models.PositiveIntegerField(default=0)
     user_of_likes = models.ManyToManyField(AuthUser, related_name='likes_of_tracks')
+    private = models.BooleanField(default=False)
+    cover = models.ImageField(
+        upload_to=get_path_upload_cover_track,
+        blank=True,
+        null=True,
+        validators=[FileExtensionValidator(allowed_extensions=['jpg']), validate_size_image]
+    )
 
     def __str__(self) -> str:
         return f'{self.user} - {self.title}'

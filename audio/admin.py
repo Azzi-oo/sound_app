@@ -27,7 +27,7 @@ class TrackAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'title', 'create_at')
     list_display_links = ('user',)
     list_filter = ('genre', 'create_at')
-    search_fields = ('user', 'genre__name')
+    search_fields = ('user', 'user__display_name', 'genre__name')
 
 
 @admin.register(models.Comment)
@@ -40,4 +40,4 @@ class CommentAdmin(admin.ModelAdmin):
 class PlayListAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'title')
     list_display_links = ('user',)
-    search_fields = ('user', 'track_title')
+    search_fields = ('user', 'user__display_name', 'track_title')
